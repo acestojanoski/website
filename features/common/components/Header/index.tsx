@@ -1,9 +1,21 @@
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { FunctionComponent, useState } from 'react'
 import css from 'styled-jsx/css'
+import { useTheme } from '../../contexts/ThemeContext'
 import { Drawer } from '../Drawer'
 import { MenuIcon } from '../MenuIcon'
 import { Navigation } from './Navigation'
+
+const MoonIcon = dynamic<{}>(
+	() => import('../MoonIcon').then((mod) => mod.MoonIcon),
+	{ ssr: false }
+)
+
+const SunIcon = dynamic<{}>(
+	() => import('../SunIcon').then((mod) => mod.SunIcon),
+	{ ssr: false }
+)
 
 const styles = css`
 	header {
@@ -13,6 +25,12 @@ const styles = css`
 		display: flex;
 		align-items: center;
 		z-index: 999;
+	}
+
+	.menu {
+		display: flex;
+		align-items: center;
+		gap: 2rem;
 	}
 
 	.desktop-menu {
@@ -25,10 +43,26 @@ const styles = css`
 		}
 
 		.desktop-menu {
-			display: block;
+			display: flex;
 		}
 	}
 `
+
+export const ThemeToggleButton = () => {
+	const { theme, toggle } = useTheme()
+
+	return (
+		<a role="button" onClick={toggle}>
+			{theme === 'dark' ? <MoonIcon /> : <SunIcon />}
+			<style jsx>{`
+				a {
+					cursor: pointer;
+					line-height: 0;
+				}
+			`}</style>
+		</a>
+	)
+}
 
 export const Header: FunctionComponent = () => {
 	const [active, setActive] = useState(false)
@@ -37,14 +71,18 @@ export const Header: FunctionComponent = () => {
 		setActive((value) => !value)
 	}
 
+	const themeToggleElement = <ThemeToggleButton />
+
 	return (
 		<header>
 			<Link href="/">Aleksandar Stojanoski</Link>
 			<div className="spacer" />
-			<div className="desktop-menu">
+			<div className="menu desktop-menu">
 				<Navigation />
+				{themeToggleElement}
 			</div>
-			<nav className="mobile-menu">
+			<nav className="menu mobile-menu">
+				{themeToggleElement}
 				<MenuIcon active={active} toggle={toggle} />
 				<Drawer active={active}>
 					<Navigation />

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { FunctionComponent } from 'react'
 import css from 'styled-jsx/css'
 import menu from './menu.json'
 
@@ -17,7 +18,7 @@ const styles = css`
 	}
 `
 
-export const Navigation = () => {
+export const Navigation: FunctionComponent = () => {
 	return (
 		<nav>
 			{menu.map((item) => {
