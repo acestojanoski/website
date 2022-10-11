@@ -12,9 +12,18 @@ const styles = css`
 	}
 `
 
-export const Tag: FunctionComponent<WithChildren> = ({ children }) => {
+type TagProps = {
+	bgColor?: string
+	color?: string
+}
+
+export const Tag: FunctionComponent<WithChildren<TagProps>> = ({
+	children,
+	bgColor,
+	color,
+}) => {
 	return (
-		<span>
+		<span style={{ background: bgColor, color }}>
 			{children}
 			<style jsx>{styles}</style>
 		</span>
