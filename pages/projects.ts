@@ -1,4 +1,1 @@
-export {
-	ProjectsPage as default,
-	getServerSideProps,
-} from '@/features/projects/pages'
+export { ProjectsPage as default } from '@/features/projects/pages'

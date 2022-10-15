@@ -5,10 +5,11 @@ import { WithChildren } from '../types'
 const styles = css`
 	span {
 		border: 0.1rem solid var(--foreground);
-		padding: 0.32rem 0.48rem;
+		padding: 0.52rem 0.8rem;
 		font-size: 1.28rem;
 		text-transform: uppercase;
 		letter-spacing: 0.1rem;
+		border-radius: 0.8rem;
 	}
 `
 

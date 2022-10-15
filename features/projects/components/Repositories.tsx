@@ -1,46 +1,115 @@
-import { Tag } from '@/features/common/components'
+import { Button, Tag } from '@/features/common/components'
 import { User } from '@octokit/graphql-schema'
+import useSWRInfinite from 'swr/infinite'
 import Link from 'next/link'
-import { FunctionComponent } from 'react'
 import css from 'styled-jsx/css'
 import { RepositoryCard } from './RepositoryCard'
 import { RepositoryCardGrid } from './RepositoryCardGrid'
+import { cn } from '@/features/common/utils'
 
 const styles = css`
 	main {
 		grid-column: 1 / -1;
 		margin: 5rem 0;
 	}
+
+	.load-more {
+		display: none;
+		margin-top: 3rem;
+		justify-content: center;
+	}
+
+	.load-more.enabled {
+		display: flex;
+	}
 `
 
-type RepositoriesProps = {
-	repositories: User['repositories']
+function getKey(pageIndex: number, previousPageData: User['repositories']) {
+	// Reached the end
+	if (previousPageData && !previousPageData.pageInfo.hasNextPage) {
+		return null
+	}
+
+	// First page
+	if (pageIndex === 0) {
+		return '/api/repositories'
+	}
+
+	return `/api/repositories?after=${previousPageData.pageInfo.endCursor}`
 }
 
-export const Repositories: FunctionComponent<RepositoriesProps> = ({
-	repositories,
-}) => {
+function fetcher(key: string) {
+	return fetch(key).then((response) => response.json())
+}
+
+export function Repositories() {
+	const { data, error, size, setSize } = useSWRInfinite<User['repositories']>(
+		getKey,
+		fetcher,
+		{
+			revalidateFirstPage: false,
+		}
+	)
+
+	const currentPageIndex = size > 0 ? size - 1 : 0
+
+	const itReachedTheEnd =
+		data &&
+		data[currentPageIndex] &&
+		!data[currentPageIndex].pageInfo.hasNextPage
+
+	const handleLoadMore = () => {
+		if (itReachedTheEnd) {
+			return
+		}
+
+		setSize(size + 1)
+	}
+
+	const isLoadingInitialData = !data && !error
+
+	const isLoadingMore =
+		isLoadingInitialData ||
+		(size > 0 && data && typeof data[currentPageIndex] === 'undefined')
+
 	return (
 		<main>
 			<RepositoryCardGrid>
-				{repositories.edges?.map((item) => (
-					<Link key={item?.cursor} href={item?.node?.url} passHref>
-						<a>
-							<RepositoryCard>
-								<RepositoryCard.Title>{item?.node?.name}</RepositoryCard.Title>
-								{!!item?.node?.description && (
-									<RepositoryCard.Description>
-										{item.node.description}
-									</RepositoryCard.Description>
-								)}
-								{!!item?.node?.primaryLanguage?.name && (
-									<Tag>{item.node.primaryLanguage.name}</Tag>
-								)}
-							</RepositoryCard>
-						</a>
-					</Link>
-				))}
+				{data
+					?.flatMap((page) => page.edges)
+					.map((edge) => {
+						if (!edge || !edge.node) {
+							return
+						}
+
+						return (
+							<Link key={edge.cursor} href={edge.node.url} passHref>
+								<a>
+									<RepositoryCard>
+										<div>
+											<RepositoryCard.Title>
+												{edge.node.name}
+											</RepositoryCard.Title>
+											{!!edge.node.description && (
+												<RepositoryCard.Description>
+													{edge.node.description}
+												</RepositoryCard.Description>
+											)}
+										</div>
+										{!!edge.node.primaryLanguage?.name && (
+											<Tag>{edge.node.primaryLanguage.name}</Tag>
+										)}
+									</RepositoryCard>
+								</a>
+							</Link>
+						)
+					})}
 			</RepositoryCardGrid>
+			<div className={cn('load-more', { enabled: !itReachedTheEnd })}>
+				<Button disabled={isLoadingMore} onClick={handleLoadMore}>
+					{isLoadingMore ? 'Loading...' : 'Load More'}
+				</Button>
+			</div>
 			<style jsx>{styles}</style>
 		</main>
 	)
