@@ -1,18 +1,13 @@
 import { Header, PageGrid, PageHead } from '@/features/common/components'
-import { GetStaticProps, NextPage } from 'next'
+import { NextPage } from 'next'
+import { Repositories } from '../components'
 
 export const ProjectsPage: NextPage = () => {
 	return (
 		<PageGrid>
 			<PageHead title="Projects" />
 			<Header />
+			<Repositories />
 		</PageGrid>
 	)
-}
-
-export const getStaticProps: GetStaticProps = async () => {
-	return {
-		props: {},
-		revalidate: 24 * 60 * 60, // 25h * 60min * 60s
-	}
 }

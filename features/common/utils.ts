@@ -9,3 +9,5 @@ export function cn(...args: (string | Record<string, any>)[]) {
 		)
 		.join(' ')
 }
+
+export const gql = String.raw
