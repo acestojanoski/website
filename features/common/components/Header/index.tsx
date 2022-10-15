@@ -1,18 +1,18 @@
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import { FunctionComponent, useState } from 'react'
+import { FunctionComponent, PropsWithChildren, useState } from 'react'
 import css from 'styled-jsx/css'
 import { useTheme } from '../../contexts/ThemeContext'
 import { Drawer } from '../Drawer'
 import { MenuIcon } from '../MenuIcon'
 import { Navigation } from './Navigation'
 
-const MoonIcon = dynamic<{}>(
+const MoonIcon = dynamic<PropsWithChildren>(
 	() => import('../MoonIcon').then((mod) => mod.MoonIcon),
 	{ ssr: false }
 )
 
-const SunIcon = dynamic<{}>(
+const SunIcon = dynamic<PropsWithChildren>(
 	() => import('../SunIcon').then((mod) => mod.SunIcon),
 	{ ssr: false }
 )

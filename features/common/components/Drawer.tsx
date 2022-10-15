@@ -1,6 +1,5 @@
-import { FunctionComponent } from 'react'
+import { PropsWithChildren } from 'react'
 import css from 'styled-jsx/css'
-import { WithChildren } from '../types'
 import { cn } from '../utils'
 
 const styles = css`
@@ -26,10 +25,7 @@ type DrawerProps = {
 	active?: boolean
 }
 
-export const Drawer: FunctionComponent<WithChildren<DrawerProps>> = ({
-	children,
-	active,
-}) => {
+export function Drawer({ children, active }: PropsWithChildren<DrawerProps>) {
 	return (
 		<div className={cn('drawer', { active })}>
 			{children}

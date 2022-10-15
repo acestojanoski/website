@@ -1,6 +1,5 @@
-import { FunctionComponent } from 'react'
+import { PropsWithChildren } from 'react'
 import css from 'styled-jsx/css'
-import { WithChildren } from '../types'
 
 const styles = css`
 	div {
@@ -12,7 +11,7 @@ const styles = css`
 	}
 `
 
-export const PageGrid: FunctionComponent<WithChildren> = ({ children }) => {
+export function PageGrid({ children }: PropsWithChildren) {
 	return (
 		<div>
 			{children}

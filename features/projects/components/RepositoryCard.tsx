@@ -1,8 +1,7 @@
-import { WithChildren } from '@/features/common/types'
-import { FunctionComponent } from 'react'
+import { FunctionComponent, PropsWithChildren } from 'react'
 import css from 'styled-jsx/css'
 
-const Title: FunctionComponent<WithChildren> = ({ children }) => {
+function Title({ children }: PropsWithChildren) {
 	return (
 		<h3>
 			{children}
@@ -15,7 +14,7 @@ const Title: FunctionComponent<WithChildren> = ({ children }) => {
 	)
 }
 
-const Description: FunctionComponent<WithChildren> = ({ children }) => {
+function Description({ children }: PropsWithChildren) {
 	return <p>{children}</p>
 }
 
@@ -80,7 +79,7 @@ const styles = css`
 	}
 `
 
-export const RepositoryCard: FunctionComponent<WithChildren> & {
+export const RepositoryCard: FunctionComponent<PropsWithChildren> & {
 	Title: typeof Title
 	Description: typeof Description
 } = ({ children }) => {

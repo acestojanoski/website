@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 export function noop() {}
 
 export function cn(...args: (string | Record<string, any>)[]) {

@@ -1,6 +1,6 @@
 import {
 	createContext,
-	FunctionComponent,
+	PropsWithChildren,
 	useCallback,
 	useContext,
 	useEffect,
@@ -8,8 +8,9 @@ import {
 	useState,
 } from 'react'
 import { THEME_LOCAL_STORAGE } from '../constants'
-import { Theme, WithChildren } from '../types'
 import { noop } from '../utils'
+
+export type Theme = 'light' | 'dark'
 
 type ThemeContextValue = {
 	theme: Theme
@@ -41,9 +42,7 @@ const getCurrentTheme = (): Theme => {
 	)
 }
 
-export const ThemeProvider: FunctionComponent<WithChildren> = ({
-	children,
-}) => {
+export function ThemeProvider({ children }: PropsWithChildren) {
 	const [theme, setTheme] = useState(() => getCurrentTheme())
 
 	const set = useCallback((theme: Theme) => {

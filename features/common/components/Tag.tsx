@@ -1,6 +1,5 @@
-import { FunctionComponent } from 'react'
+import { PropsWithChildren } from 'react'
 import css from 'styled-jsx/css'
-import { WithChildren } from '../types'
 
 const styles = css`
 	span {
@@ -18,11 +17,7 @@ type TagProps = {
 	color?: string
 }
 
-export const Tag: FunctionComponent<WithChildren<TagProps>> = ({
-	children,
-	bgColor,
-	color,
-}) => {
+export function Tag({ children, bgColor, color }: PropsWithChildren<TagProps>) {
 	return (
 		<span style={{ background: bgColor, color }}>
 			{children}

@@ -1,5 +1,4 @@
-import { WithChildren } from '@/features/common/types'
-import { FunctionComponent } from 'react'
+import { PropsWithChildren } from 'react'
 import css from 'styled-jsx/css'
 
 const styles = css`
@@ -22,9 +21,7 @@ const styles = css`
 	}
 `
 
-export const RepositoryCardGrid: FunctionComponent<WithChildren> = ({
-	children,
-}) => {
+export function RepositoryCardGrid({ children }: PropsWithChildren) {
 	return (
 		<section>
 			{children}
