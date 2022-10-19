@@ -5,7 +5,7 @@ import { Main } from '../components'
 export const HomePage: NextPage = () => {
 	return (
 		<PageGrid>
-			<PageHead />
+			<PageHead description="Hello! I am Aleksandar Stojanoski, a software engineer from Macedonia." />
 			<Header />
 			<Main />
 		</PageGrid>

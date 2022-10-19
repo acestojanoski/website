@@ -5,7 +5,10 @@ import { Repositories } from '../components'
 export const ProjectsPage: NextPage = () => {
 	return (
 		<PageGrid>
-			<PageHead title="Projects" />
+			<PageHead
+				title="Projects"
+				description="Aleksandar Stojanoski - A list of my public GitHub repositories."
+			/>
 			<Header />
 			<Repositories />
 		</PageGrid>

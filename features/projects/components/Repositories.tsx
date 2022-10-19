@@ -1,11 +1,15 @@
-import { Button, Tag } from '@/features/common/components'
+import {
+	Button,
+	FetcherErrorComponent,
+	Tag,
+} from '@/features/common/components'
 import { User } from '@octokit/graphql-schema'
 import useSWRInfinite from 'swr/infinite'
 import Link from 'next/link'
 import css from 'styled-jsx/css'
 import { RepositoryCard } from './RepositoryCard'
 import { RepositoryCardGrid } from './RepositoryCardGrid'
-import { cn } from '@/features/common/utils'
+import { cn, createFetcher, FetcherError } from '@/features/common/utils'
 
 const styles = css`
 	main {
@@ -38,18 +42,15 @@ function getKey(pageIndex: number, previousPageData: User['repositories']) {
 	return `/api/repositories?after=${previousPageData.pageInfo.endCursor}`
 }
 
-function fetcher(key: string) {
-	return fetch(key).then((response) => response.json())
-}
-
 export function Repositories() {
-	const { data, error, size, setSize } = useSWRInfinite<User['repositories']>(
-		getKey,
-		fetcher,
-		{
-			revalidateFirstPage: false,
-		}
-	)
+	const { data, error, size, setSize } = useSWRInfinite<
+		User['repositories'],
+		FetcherError
+	>(getKey, createFetcher(fetch), { revalidateFirstPage: false })
+
+	if (error) {
+		return <FetcherErrorComponent error={error} />
+	}
 
 	const currentPageIndex = size > 0 ? size - 1 : 0
 
