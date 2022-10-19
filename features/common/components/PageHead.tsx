@@ -30,7 +30,7 @@ export const PageHead: FunctionComponent<PageHeadProps> = ({
 		<Head>
 			{/* Title */}
 			<title>{pageTitle}</title>
-			<meta name="og:title" content={title} />
+			<meta property="og:title" content={title} />
 
 			{/* Description */}
 			{description && (
