@@ -1,8 +1,26 @@
 import { Header, PageGrid, PageHead } from '@/features/common/components'
-import { NextPage } from 'next'
+import { User } from '@octokit/graphql-schema'
+import { GetServerSideProps, NextPage } from 'next'
 import { Repositories } from '../components'
+import { getRepositories } from '../server/service'
 
-export const ProjectsPage: NextPage = () => {
+type ProjectsPageProps = {
+	firstPage?: User['repositories']
+}
+
+export const getServerSideProps: GetServerSideProps<
+	ProjectsPageProps
+> = async () => {
+	const repositories = await getRepositories()
+
+	return {
+		props: {
+			firstPage: repositories,
+		},
+	}
+}
+
+export const ProjectsPage: NextPage<ProjectsPageProps> = ({ firstPage }) => {
 	return (
 		<PageGrid>
 			<PageHead
@@ -10,7 +28,7 @@ export const ProjectsPage: NextPage = () => {
 				description="Aleksandar Stojanoski - A list of my public GitHub repositories."
 			/>
 			<Header />
-			<Repositories />
+			<Repositories firstPage={firstPage} />
 		</PageGrid>
 	)
 }

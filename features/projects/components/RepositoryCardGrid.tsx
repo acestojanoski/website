@@ -6,6 +6,7 @@ const styles = css`
 		display: grid;
 		gap: 3rem;
 		grid-template-columns: repeat(1, 1fr);
+		grid-auto-rows: 1fr;
 	}
 
 	@media only and screen (min-width: 768px) {

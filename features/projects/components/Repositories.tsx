@@ -42,11 +42,18 @@ function getKey(pageIndex: number, previousPageData: User['repositories']) {
 	return `/api/repositories?after=${previousPageData.pageInfo.endCursor}`
 }
 
-export function Repositories() {
+type RepositoriesProps = {
+	firstPage?: User['repositories']
+}
+
+export function Repositories({ firstPage }: RepositoriesProps) {
 	const { data, error, size, setSize } = useSWRInfinite<
 		User['repositories'],
 		FetcherError
-	>(getKey, createFetcher(fetch), { revalidateFirstPage: false })
+	>(getKey, createFetcher(fetch), {
+		revalidateFirstPage: false,
+		fallbackData: firstPage ? [firstPage] : undefined,
+	})
 
 	if (error) {
 		return <FetcherErrorComponent error={error} />
