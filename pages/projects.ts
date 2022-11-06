@@ -1,4 +1,4 @@
 export {
 	ProjectsPage as default,
-	getServerSideProps,
+	getStaticProps,
 } from '@/features/projects/pages'

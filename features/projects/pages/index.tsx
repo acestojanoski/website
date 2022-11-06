@@ -1,6 +1,6 @@
 import { Header, PageGrid, PageHead } from '@/features/common/components'
 import { User } from '@octokit/graphql-schema'
-import { GetServerSideProps, NextPage } from 'next'
+import { GetStaticProps, NextPage } from 'next'
 import { Repositories } from '../components'
 import { getRepositories } from '../server/service'
 
@@ -8,15 +8,17 @@ type ProjectsPageProps = {
 	firstPage?: User['repositories']
 }
 
-export const getServerSideProps: GetServerSideProps<
-	ProjectsPageProps
-> = async () => {
+/** Seconds */
+export const ISR_REVALIDATE_INTERVAL = 60
+
+export const getStaticProps: GetStaticProps<ProjectsPageProps> = async () => {
 	const repositories = await getRepositories()
 
 	return {
 		props: {
 			firstPage: repositories,
 		},
+		revalidate: ISR_REVALIDATE_INTERVAL,
 	}
 }
 
