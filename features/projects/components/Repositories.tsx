@@ -91,24 +91,22 @@ export function Repositories({ firstPage }: RepositoriesProps) {
 						}
 
 						return (
-							<Link key={edge.cursor} href={edge.node.url} passHref>
-								<a>
-									<RepositoryCard>
-										<div>
-											<RepositoryCard.Title>
-												{edge.node.name}
-											</RepositoryCard.Title>
-											{!!edge.node.description && (
-												<RepositoryCard.Description>
-													{edge.node.description}
-												</RepositoryCard.Description>
-											)}
-										</div>
-										{!!edge.node.primaryLanguage?.name && (
-											<Tag>{edge.node.primaryLanguage.name}</Tag>
+							<Link key={edge.cursor} href={edge.node.url}>
+								<RepositoryCard>
+									<div>
+										<RepositoryCard.Title>
+											{edge.node.name}
+										</RepositoryCard.Title>
+										{!!edge.node.description && (
+											<RepositoryCard.Description>
+												{edge.node.description}
+											</RepositoryCard.Description>
 										)}
-									</RepositoryCard>
-								</a>
+									</div>
+									{!!edge.node.primaryLanguage?.name && (
+										<Tag>{edge.node.primaryLanguage.name}</Tag>
+									)}
+								</RepositoryCard>
 							</Link>
 						)
 					})}
