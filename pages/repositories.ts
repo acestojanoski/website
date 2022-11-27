@@ -1,4 +1,4 @@
 export {
 	ProjectsPage as default,
 	getStaticProps,
-} from '@/features/projects/pages'
+} from '@/features/repositories/pages'
