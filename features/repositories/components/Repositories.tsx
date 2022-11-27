@@ -26,6 +26,10 @@ const styles = css`
 	.load-more.enabled {
 		display: flex;
 	}
+
+	h1 {
+		margin-bottom: 4rem;
+	}
 `
 
 function getKey(pageIndex: number, previousPageData: User['repositories']) {
@@ -82,6 +86,7 @@ export function Repositories({ firstPage }: RepositoriesProps) {
 
 	return (
 		<main>
+			<h1>Code Repositories</h1>
 			<RepositoryCardGrid>
 				{data
 					?.flatMap((page) => page.edges)

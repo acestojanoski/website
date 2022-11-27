@@ -26,7 +26,7 @@ export const ProjectsPage: NextPage<ProjectsPageProps> = ({ firstPage }) => {
 	return (
 		<PageGrid>
 			<PageHead
-				title="Projects"
+				title="Code Repositories"
 				description="Aleksandar Stojanoski - A list of my public GitHub repositories."
 			/>
 			<Header />

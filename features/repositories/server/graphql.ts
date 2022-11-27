@@ -4,7 +4,7 @@ export const GET_REPOSITORIES = gql`
 	query ($login: String!, $afterCursor: String) {
 		user(login: $login) {
 			repositories(
-				first: 12
+				first: 9
 				isFork: false
 				isLocked: false
 				ownerAffiliations: OWNER

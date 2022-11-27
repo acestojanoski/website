@@ -1,4 +1,4 @@
-import { getRepositories } from '@/features/projects/server/service'
+import { getRepositories } from '@/features/repositories/server/service'
 import microHandlers from 'micro-handlers'
 import { NextApiRequest, NextApiResponse } from 'next'
 
