@@ -1,6 +1,6 @@
-import { gql } from '../common/utils'
 import { graphql } from '@octokit/graphql'
 import { User } from '@octokit/graphql-schema'
+import { gql } from '../common/utils'
 
 export const GET_REPOSITORIES_QUERY = gql`
 	query ($login: String!, $afterCursor: String) {
