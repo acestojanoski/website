@@ -9,9 +9,10 @@
 	"scripts": {
 		"build": "rimraf .build && tsc",
 		"build:watch": "tsc --watch",
-		"start:watch": "nodemon --exec \"micro\" --watch .build",
+		"start": "micro -l tcp://localhost:3001",
+		"start:watch": "nodemon --exec \"yarn start\" --watch .build",
 		"dev": "yarn build && concurrently \"yarn build:watch\" \"yarn start:watch\"",
-		"start": "micro"
+		"lint": "eslint **/**.ts"
 	},
 	"dependencies": {
 		"@octokit/graphql": "^5.0.1",
